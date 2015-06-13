@@ -1,0 +1,437 @@
+0---
+**** 最原始的
+#coding=utf-8
+#!/usr/bin/python
+
+
+print "Just for I/O test just for fun"
+
+class File_RW:
+	def __init__(self, src_file, des_file, pat):
+		self.pat = pat
+		try:
+			self.fr = open(src_file,'rt')
+			self.fw = open(des_file,'wt')
+		except IOError:
+			print "IOError:can\'t open this file\n"
+	
+	def __del__(self):
+		self.fr.close()
+		self.fw.close()
+		#print "tttt"
+	
+	def read_write(self):
+		#print "iiii"
+		try:
+			lines = self.fr.readlines()
+			cnt = 0
+			mylist = []
+			for line in lines:
+				if (line[-1] == '\n'):
+					line = line[:-1]
+					#print "have n"
+				#print "test"
+				#print line
+				words = line.split(self.pat)
+				#words = words[:-1]
+				cp = 0
+				for word in words:
+					if cp == 0:
+						cnt = cnt + 1
+						if word in mylist:
+							#print "repeat rows in line %d, context is %s" %(cnt, line)
+							print word
+							mylist[len(mylist):] = ['']
+							break
+						else:
+							mylist[len(mylist):] = [word] 
+							self.fw.write(word)
+	#						cnt = cnt + 1
+	#						print "**%s ** %d" % (word,cnt)
+						
+							cp = 1
+					else:
+						self.fw.write(',' + word)
+				self.fw.write('\n')
+		except IOError:
+			print "IOError:can\'t not read from file"
+	
+
+src_file = "./old_zongbang"
+des_file = "./new_zongbang"
+pat = "\t"
+
+if ( __name__ == "__main__"):
+	frw = File_RW(src_file, des_file, pat)
+	frw.read_write()
+
+**** 比较先进的
+#!/usr/bin/python2.6
+
+import sys
+
+app_name_map = {}
+def main():
+    ifp = file(sys.argv[1])
+    for line in ifp:
+        if not line:continue
+        array = line.split("\t")
+        app_name = array[0]
+        if not app_name_map.has_key(app_name):
+            app_name_map[app_name] = set()
+        app_name_map[app_name].add(line)
+    ifp.close()
+    #delete the chongfu line and add the line when the app_name is not appead in the first file
+    ifp2 = file(sys.argv[2])
+    for line in ifp2:
+        if not line:continue
+        array = line.split("\t")
+        app_name = array[0]
+        if not app_name_map.has_key(app_name):
+            app_name_map[app_name] = set()
+            app_name_map[app_name].add(line)
+    ifp2.close()
+
+    ifp3 = file(sys.argv[3])
+    for line in ifp3: 
+        if not line:continue
+        array = line.split("\t")
+        app_name = array[0]
+        if not app_name_map.has_key(app_name):
+            app_name_map[app_name] = set()
+            app_name_map[app_name].add(line)
+    ifp3.close()
+    ifp4 = file(sys.argv[4])
+    for line in ifp4:
+        if not line:continue
+        array = line.split("\t")
+        app_name = array[0]
+        if not app_name_map.has_key(app_name):
+            app_name_map[app_name] = set()
+            app_name_map[app_name].add(line)
+    ifp4.close()
+
+
+	# 输出结果
+    #//Dict.items()  把dict变为可遍历的元组数组  Dict.clear()  #清空字典 Dict.pop(key)  取出一个key，并从dict中移除他  #Dict.get(key, default) 获得指定key的值，如果没有值，返回default值
+	#Dict.copy()  将一个Dict拷贝给另一个Dict，而不是传索引
+	#Dict.has_key(key)  判断一个字典是否有某个key
+	for app_name, app_set in app_name_map.items():
+        #if len(app_set) == 1:
+            #continue
+        for item in app_set:
+            print item.strip()
+        #print ""
+
+'''
+函数原型
+声明：s为字符串，rm为要删除的字符序列
+s.strip(rm)        删除s字符串中开头、结尾处，位于 rm删除序列的字符
+s.lstrip(rm)       删除s字符串中开头处，位于 rm删除序列的字符
+s.rstrip(rm)      删除s字符串中结尾处，位于 rm删除序列的字符
+注意：当rm为空时，默认删除空白符（包括'\n', '\r',  '\t',  ' ')
+'''
+		
+if __name__ == '__main__':
+    main()
+	
+'''
+
+******对比与：（最后的方式，也是比较好的方式）
+#!/usr/bin/python2.6
+#-*-encoding:utf-8-*-
+
+import sys
+'''
+python2.6 quchong_zyp.py ./_input/old_zongbang ./_input/xinshouji_zongbang ./_input/mianfei_1 ./_input/mianfei_2 > output
+python2.6 quchong_zyp.py ./_input/old_zongbang > output_c
+'''
+app_name_map = {}
+def main():
+    flag = 0
+    for filepath in sys.argv:
+        '''just for sys and Usage: python2.6 quchong_zyp.py file_list'''
+        if flag == 0:
+            flag = 1
+            continue#just for argv[0]
+        if flag == 1:
+            '''the first article do more: add nwe topic to app_name_map and add the quchong topic'''
+            ifp = file(filepath)
+            for line in ifp:
+                if not line:continue
+                array = line.split("\t")
+                app_name = array[0]
+                #print app_name
+                if app_name not in app_name_map:
+                     #app_name_map[app_name] = set()#if first,then create a new set, and the set is none chongfu elements
+                     app_name_map[app_name] = []#just use [] replace the set(),because the set is unique eles
+                #app_name_map[app_name].add(line)# if the first or not, both add
+                app_name_map[app_name].append(line)# [] is append in array tail
+            ifp.close()
+            flag = 4
+        else:
+            '''the last articles just add the new topic to app_name_map'''
+            ifp = file(filepath)
+            for line in ifp:
+                if not line:continue
+                arr = line.split("\t")
+                app_name = arr[0]
+                if app_name not in app_name_map:
+                    #app_name_map[app_name] = set()#if first,then create a new set, and the set is none chongfu elements$
+                    app_name_map[app_name] = []#just use [] replace the set(),because the set is unique eles$
+                    #app_name_map[app_name].add(line)# if the first or not, both add$
+                    app_name_map[app_name].append(line)# [] is append in array tail$
+            #end for
+            ifp.close()
+    # end for
+    # output the conbined result
+    for app_name, app_set in app_name_map.items():
+        if len(app_set) == 1:# just for output the chongfu eles
+            continue
+        for item in app_set:
+            print item.strip()
+        #print "
+    #end for
+
+if __name__ == '__main__':
+    main()
+
+
+
+1、打开多个窗口
+打开多个窗口的命令以下几个：
+横向切割窗口
+:new+窗口名(保存后就是文件名) 
+:split+窗口名，也可以简写为:sp+窗口名
+纵向切割窗口名
+:vsplit+窗口名，也可以简写为：vsp+窗口名
+3、窗口切换
+:ctrl+w+j/k，通过j/k可以上下切换，或者:ctrl+w加上下左右键，还可以通过快速双击ctrl+w依次切换窗口。
+7、文件浏览
+:Ex 开启目录浏览器，可以浏览当前目录下的所有文件，并可以选择
+:Sex 水平分割当前窗口，并在一个窗口中开启目录浏览器
+:ls 显示当前buffer情况
+8、vi与shell切换
+:shell 可以在不关闭vi的情况下切换到shell命令行
+:exit 从shell回到vi
+4--关于代码折叠
+帮助手册：
+：help fold.txt
+：help usr_28.txt
+vim提供以下6种折叠的方法：
+manual：手工定义折叠
+indent：更多的缩进表示更高级别的折叠
+expr：用表达式来定义折叠
+syntax：用语法高亮来定义折叠
+diff：对没有更改的文本进行折叠
+marker：对文中的标志折叠
+可用选项 'foldmethod' 来设定折叠方法。比如, 如果想按照语法高亮来定义折叠, 则在~/.vimrc中增加下面这行:
+set foldmethod=syntax “按照语法高亮来折叠代码, 其实就是按照代码中的一些括号来定义折叠位置, 比如: "{ }", "/* */" 
+set foldlevel=100  " 启动vim时不要自动折叠代码
+set foldlevel=1 “启动vim时自动折叠代码
+一些关于折叠的常用命令，记得要在nomal模式下输入：
+za：打开/关闭当前折叠
+zA：循环地打开/关闭当前折叠
+zo：打开当前折叠
+zc：关闭当前折叠
+zM：关闭所有折叠
+zR：打开所有折叠
+5--Linux 不同用户间复制文件的方法
+使用scp命令。原本scp是用来在不同主机上通过网络copy文件，用在这里刚好。用bar用户登录
+#用bar用户登录：
+# scp foo@localhost:/home/foo/file.txt ./  
+#输入foo用户密码，开始文件传输。也可以用foo用户登录，
+# scp file.txt bar@localhost:/home/bar/  
+#输入bar用户密码，过程一样。
+6--xshell很好用,然后有时候想在windows和linux上传或下载某个文件,其实有个很简单的方法就是rz,sz
+首先你的Ubuntu需要安装rz.sz(如果没有安装请执行以下命令,安装完的请跳过.其它版本linux请自行安装相应软件)
+yum  install lrzsz
+安装完毕即可使用
+rz，sz是便是Linux/Unix同Windows进行ZModem文件传输的命令行工具
+windows端需要支持ZModem的telnet/ssh客户端(xshell支持,好像putty不支持)，SecureCRT就可以用SecureCRT登陆到Unix/Linux主机（telnet或ssh均可）
+运行命令rz，即是接收文件，xshell就会弹出文件选择对话框，选好文件之后关闭对话框，文件就会上传到linux里的当前目录
+运行命令sz file 就是发文件到windows上（保存的目录是可以配置） 比ftp命令方便多了，而且服务器不用再开FTP服务了
+
+'''
+# http://www.oschina.net/question/129540_49376 结合使用 MongoDB 和 Django 非常棒的
+
+7-- set 也可以写在$HOME下的.exrc (如果是vi)或者.vimrc(如果是vim)中。
+set autoindent    在插入模式下，对每行按与上行同样的标准进行缩进，与shiftwidth选项结合使用
+set list   把制表符显示为^I ,用$标示行尾（使用list分辨尾部的字符是tab还是空格）
+set number 显示行号
+set readonly文件只读，除非使用！可写
+set shiftwidth反向制表符中的空格数目
+set showmatch在vi中输入），}时，光标会暂时的回到相匹配的（，{   （如果没有相匹配的就发出错误信息的铃声），编程时很有用
+set tabstop指定tab缩进的字符数目
+set wrapscan授索在文件的两端绕回
+vim set 
+set smartindent    
+set cindent
+
+8--
+搜索及替换命令 
+/pattern：从光标开始处向文件尾搜索pattern 
+?pattern：从光标开始处向文件首搜索pattern 
+n：在同一方向重复上一次搜索命令 
+N：在反方向上重复上一次搜索命令 
+：s/p1/p2/g：将当前行中所有p1均用p2替代 
+：n1,n2s/p1/p2/g：将第n1至n2行中所有p1均用p2替代 
+：g/p1/s//p2/g：将文件中所有p1均用p2替换 
+最后行方式命令 
+：n1,n2 co n3：将n1行到n2行之间的内容拷贝到第n3行下 
+：n1,n2 m n3：将n1行到n2行之间的内容移至到第n3行下 
+：n1,n2 d ：将n1行到n2行之间的内容删除 
+：w ：保存当前文件 
+：e filename：打开文件filename进行编辑 
+：x：保存当前文件并退出 
+：q：退出vi 
+：q!：不保存文件并退出vi 
+：!command：执行shell命令command 
+：n1,n2 w!command：将文件中n1行至n2行的内容作为command的输入并执行之，若不指定n1，n2，则表示将整个文件内容作为command的输入 
+：r!command：将命令command的输出结果放到当前行 
+
+9---python--IndentationError: 解决方法就是统一tab 和 空格的使用，使用setlist可以查看，包括注释和空行的缩进；检查语法错误等。以后遇到了IndentationError: unexpected indent你就要知道python编译器是在告诉你“Hi，老兄，你的文件里格式不对了，可能是tab和空格没对齐的问题，你需要检查下tab和空格了”。 
+
+
+10--Python运行的17个时新手常见错误小结
+当初学 Python 时，想要弄懂 Python 的错误信息的含义可能有点复杂。这里列出了常见的的一些让你程序 crash 的运行时错误
+
+1）忘记在 if , elif , else , for , while , class ,def 声明末尾添加 ：（导致 “SyntaxError ：invalid syntax”） 
+该错误将发生在类似如下代码中： 
+if spam == 42 
+print('Hello!') 
+
+2)使用 = 而不是 ==（导致“SyntaxError: invalid syntax”） 
+= 是赋值操作符而 == 是等于比较操作。该错误发生在如下代码中： 
+if spam = 42: 
+print('Hello!') 
+
+3）错误的使用缩进量。（导致“IndentationError：unexpected indent”、“IndentationError：unindent does not match any outer indetation level”以及“IndentationError：expected an indented block”） 
+记住缩进增加只用在以：结束的语句之后，而之后必须恢复到之前的缩进格式。该错误发生在如下代码中： 
+print('Hello!') 
+print('Howdy!') 
+或者： 
+if spam == 42: 
+print('Hello!') 
+print('Howdy!') 
+或者： 
+if spam == 42: 
+print('Hello!') 
+
+4）在 for 循环语句中忘记调用 len() (导致“TypeError: 'list' object cannot be interpreted as an integer”) 
+通常你想要通过索引来迭代一个list或者string的元素，这需要调用 range() 函数。要记得返回len 值而不是返回这个列表。 
+该错误发生在如下代码中： 
+spam = ['cat', 'dog', 'mouse'] 
+for i in range(spam): 
+print(spam[i]) 
+
+5）尝试修改string的值（导致“TypeError: 'str' object does not support item assignment”） 
+string是一种不可变的数据类型，该错误发生在如下代码中： 
+spam = 'I have a pet cat.' 
+spam[13] = 'r' 
+print(spam) 
+
+而你实际想要这样做： 
+spam = 'I have a pet cat.' 
+spam = spam[:13] + 'r' + spam[14:] 
+print(spam) 
+
+6）尝试连接非字符串值与字符串（导致 “TypeError: Can't convert 'int' object to str implicitly”） 
+该错误发生在如下代码中： 
+numEggs = 12 
+print('I have ' + numEggs + ' eggs.') 
+而你实际想要这样做： 
+numEggs = 12 
+print('I have ' + str(numEggs) + ' eggs.') 
+或者： 
+numEggs = 12 
+print('I have %s eggs.' % (numEggs)) 
+
+7）在字符串首尾忘记加引号（导致“SyntaxError: EOL while scanning string literal”） 
+该错误发生在如下代码中： 
+print(Hello!') 
+或者: 
+print('Hello!) 
+或者: 
+myName = 'Al' 
+print('My name is ' + myName + . How are you?') 
+
+8）变量或者函数名拼写错误（导致“NameError: name 'fooba' is not defined”） 
+该错误发生在如下代码中： 
+foobar = 'Al' 
+print('My name is ' + fooba) 
+或者: 
+spam = ruond(4.2) 
+或者: 
+spam = Round(4.2) 
+
+9）方法名拼写错误（导致 “AttributeError: 'str' object has no attribute 'lowerr'”） 
+该错误发生在如下代码中： 
+spam = 'THIS IS IN LOWERCASE.' 
+spam = spam.lowerr() 
+
+10）引用超过list最大索引（导致“IndexError: list index out of range”） 
+该错误发生在如下代码中： 
+spam = ['cat', 'dog', 'mouse'] 
+print(spam[6]) 
+
+11）使用不存在的字典键值（导致“KeyError：‘spam'”） 
+该错误发生在如下代码中： 
+spam = {'cat': 'Zophie', 'dog': 'Basil', 'mouse': 'Whiskers'} 
+print('The name of my pet zebra is ' + spam['zebra']) 
+
+12）尝试使用Python关键字作为变量名（导致“SyntaxError：invalid syntax”） 
+Python关键不能用作变量名，该错误发生在如下代码中： 
+class = 'algebra'
+Python3的关键字有：and, as, assert, break, class, continue, def, del, elif, else, except, False, finally, for, from, global, if, import, in, is, lambda, None, nonlocal, not, or, pass, raise, return, True, try, while, with, yield 
+
+13）在一个定义新变量中使用增值操作符（导致“NameError: name 'foobar' is not defined”） 
+不要在声明变量时使用0或者空字符串作为初始值，这样使用自增操作符的一句spam += 1等于spam = spam + 1，这意味着spam需要指定一个有效的初始值。 
+该错误发生在如下代码中： 
+spam = 0 
+spam += 42 
+eggs += 42 
+
+14）在定义局部变量前在函数中使用局部变量（此时有与局部变量同名的全局变量存在）（导致“UnboundLocalError: local variable 'foobar' referenced before assignment”） 
+在函数中使用局部变来那个而同时又存在同名全局变量时是很复杂的，使用规则是：如果在函数中定义了任何东西，如果它只是在函数中使用那它就是局部的，反之就是全局变量。 
+这意味着你不能在定义它之前把它当全局变量在函数中使用。 
+该错误发生在如下代码中： 
+someVar = 42 
+def myFunction(): 
+print(someVar) 
+someVar = 100 
+myFunction() 
+
+15）尝试使用 range()创建整数列表（导致“TypeError: 'range' object does not support item assignment”） 
+有时你想要得到一个有序的整数列表，所以 range() 看上去是生成此列表的不错方式。然而，你需要记住 range() 返回的是 “range object”，而不是实际的 list 值。 
+该错误发生在如下代码中： 
+spam = range(10) 
+spam[4] = -1 
+也许这才是你想做： 
+spam = list(range(10)) 
+spam[4] = -1 
+（注意：在 Python 2 中 spam = range(10) 是能行的，因为在 Python 2 中 range() 返回的是list值，但是在 Python 3 中就会产生以上错误） 
+16）不错在 ++ 或者 -- 自增自减操作符。（导致“SyntaxError: invalid syntax”） 
+如果你习惯于例如 C++ , Java , PHP 等其他的语言，也许你会想要尝试使用 ++ 或者 -- 自增自减一个变量。在Python中是没有这样的操作符的。 
+该错误发生在如下代码中： 
+spam = 1 
+spam++ 
+也许这才是你想做的： 
+spam = 1 
+spam += 1 
+
+17）忘记为方法的第一个参数添加self参数（导致“TypeError: myMethod() takes no arguments (1 given)”） 
+该错误发生在如下代码中： 
+class Foo(): 
+def myMethod(): 
+print('Hello!') 
+a = Foo() 
+a.myMethod() 
+
+
+File "time_data.py", line 15
+SyntaxError: Non-ASCII character '\xb4' in file time_data.py on line 15, but no encoding declared; see http://www.python.org/peps/pep-0263.html for details
+
+File "time_data.py", line 17, in <module>
+    print "新世界".encode('gbk')
+UnicodeDecodeError: 'ascii' codec can't decode byte 0xd0 in position 0: ordinal not in range(128)
