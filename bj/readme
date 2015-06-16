@@ -1,0 +1,13 @@
+This is for BJ readme.
+Just for bj wenjianjia.
+Just for fun, for my job in BJ.
+Where so many files in my branches???
+
+upan jia zai:
+zyp@ubuntu:~/Desktop/python_zyp/bj_soso$ sudo umount ~/Desktop/mount_UPan
+zyp@ubuntu:~/Desktop/python_zyp/bj_soso$ sudo mount -t vfat /dev/sdb1 ~/Desktop/mount_UPan
+
+copy wenjian:
+cp -rf ~/Desktop/python_zyp/bj_soso/mouwenjianjia/* ./mouwenjianjia/
+
+I think, if you have more problems in your life, you will learn more and more quickly to adapt to the new environment and world..If you just live in school and learn what the teacher told and learn by yourself, you learn little and growing little....lilun yu shijian; shijian tai zhongyao le
