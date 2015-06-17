@@ -1,0 +1,35 @@
+<br> test for .....</br>
+<p> {{name}} </p>
+<p> {{age}} </p>
+<table>
+	<tr>
+	<td>language</td>
+	</tr>
+	{% for e in eles %}
+	<tr>
+	<td>{{e}} </td>
+	</tr>
+	{% endfor %}
+	<tr>
+	<td>id</td>
+	<td>age</td>
+	<td>name</td>
+	<td>sex</td>
+	<td>birth</td>
+	
+	</tr>
+
+	{% for content in res_list %}
+	<tr>
+	<td>{{content.id}} </td>
+	<td>{{content.age}}</td>
+	<td>{{content.name}} </td>
+	<td>{{content.sex}}</td>
+	<td>{{content.birth}} </td>
+
+	</tr>
+	{% endfor %}
+
+
+
+</table>
