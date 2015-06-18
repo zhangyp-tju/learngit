@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Jquery 操作Html控件 Radio、CheckBox、Select控件</title>
+    <script src="Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script src="Scripts/myJs.js" type="text/javascript"></script>
+    <style type="text/css">
+        html body
+        {
+            margin: 0px auto;
+            font-family: "宋体";
+            color: #012C55;
+            background-color: #fff;
+            overflow: auto;
+        }
+        .title
+        {
+            margin: 5px auto;
+            background-color: #B0C4DE;
+            width: 800px;
+            text-align: center;
+            vertical-align: middle;
+            color: Red;
+        }
+        .title span
+        {
+            font-size: 10pt;
+            font-weight: bold;
+        }
+        
+        .box
+        {
+            margin: 2px auto;
+            background-color: #CCFF99;
+            width: 800px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .box input
+        {
+            vertical-align: middle;
+        }
+        
+        .box span
+        {
+            font-size: 9pt;
+            line-height: 12px;
+        }
+        .btn
+        {
+            width: 70px;
+            height: 22px;
+            display: inline-block;
+            background-color: #2daebf;
+            color: #fff;
+            cursor: pointer;
+            border: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">
+        <span>Jquery 操作 CheckBox</span>
+    </div>
+    <div class="box">
+        <input id="ckb1" name="ckb" checked="checked" value="0" type="checkbox" /><span>篮球</span>
+        <input id="ckb2" name="ckb" checked="checked" value="1" type="checkbox" /><span>排球</span>
+        <input id="ckb3" name="ckb" disabled="disabled" value="2" type="checkbox" /><span>乒乓球</span>
+        <input id="ckb4" name="ckb" disabled="disabled" value="3" type="checkbox" /><span>羽毛球</span>
+    </div>
+    <div class="box">
+        <input id="btnckb1" class="btn" type="button" value="禁用" />
+        <input id="btnckb2" class="btn" type="button" value="获取数据" />
+        <input id="btnckb3" class="btn" type="button" value="全选" />
+        <input id="btnckb4" class="btn" type="button" value="全不选" />
+        <input id="btnckb5" class="btn" type="button" value="反选" />
+    </div>
+    <div class="title">
+        <span>Jquery 操作 Radio</span>
+    </div>
+    <div class="box">
+        <input name="edu" value="0" type="radio" checked="checked" /><span>专科</span>
+        <input name="edu" value="1" type="radio" /><span>本科</span>
+        <input name="edu" value="2" type="radio" disabled="disabled" /><span>研究生</span>
+        <input name="edu" value="3" type="radio" disabled="disabled"/><span>博士生</span>
+    </div>
+    <div class="box">
+        <input id="btnRia1" class="btn" type="button" value="禁用" />
+        <input id="btnRia2" class="btn" type="button" value="获取数据" />
+        <input id="btnRia3" class="btn" type="button" value="代码选择" />
+    </div>
+    <div class="title">
+        <span>Jquery 操作 Select</span>
+    </div>
+    <div class="box">
+        <select id="cmbxGame">
+            <option value="0" selected="selected">黑猫警长</option>
+            <option value="1" disabled="disabled">大头儿子</option>
+            <option value="2">熊出没</option>
+            <option value="3">喜羊羊</option>
+        </select>
+    </div>
+    <div class="box">
+        <input id="btnCbx1" class="btn" type="button" value="禁用" />
+        <input id="btnCbx2" class="btn" type="button" value="获取数据" />
+        <input id="btnCbx3" class="btn" type="button" value="代码选择" />
+        <input id="btnCbx4" class="btn" type="button" value="索引" />
+        <input id="btnCbx5" class="btn" type="button" value="清空项" />
+        <input id="btnCbx6" class="btn" type="button" value="增加项" />
+    </div>
+</body>
+</html>
