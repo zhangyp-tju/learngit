@@ -11,3 +11,5 @@ copy wenjian:
 cp -rf ~/Desktop/python_zyp/bj_soso/mouwenjianjia/* ./mouwenjianjia/
 
 I think, if you have more problems in your life, you will learn more and more quickly to adapt to the new environment and world..If you just live in school and learn what the teacher told and learn by yourself, you learn little and growing little....lilun yu shijian; shijian tai zhongyao le
+
+I can't use command: git commit -a ,beacause the defalut EDITOR is nano;You should first change nano to vim...  command: echo export EDITOR=/usr/bin/vim >> ~/.bashrc
