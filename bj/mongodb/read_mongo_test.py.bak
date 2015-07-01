@@ -1,0 +1,257 @@
+#!/usr/bin/python
+#-*-encoding:utf-8-*-
+
+import hashlib
+import pymongo
+
+def fetch_id_bug():
+    
+    SOURCE_IP = "10.136.20.106"
+    SOURCE_PORT = 27070
+    conn_src = pymongo.Connection(host=SOURCE_IP,port=SOURCE_PORT)
+    #db_src_article = conn_src.WeiXinRecom.weixin_articles# sorurce DB
+    db_src_article = conn_src.WeiXinSubtopicPlatform.weixin_articles# sorurce DB
+
+    res_arts = db_src_article.find({'url':{'$exists':True}}).limit(100)#pymongo is sensitive '',True not true
+    for art in res_arts:
+        print art.get('_id','100000').encode('gbk','ignore')
+        print "url*** = %s**" %art.get('url',"kongkong")
+        print art.get('rubtopic_1')
+        words = art.get('subtopic_1').decode('gbk')
+        print words
+        '''
+        new_w = words.split()
+        for word in new_w:
+            print word
+            print "222"
+        for word in art.get('subtopic_1').decode('gbk'):
+            print word
+        '''
+        print "***"
+        print art.get('topic1')
+        '''
+        for word in art.get('topic1').decode('gbk'):
+            print word
+        '''
+        print (art.get('subtopic_1').decode('gbk'),art.get('topic1'))#.decode('gbk','ignore')
+    # close db    
+    conn_src.close()
+
+def fetch_summary_seg_bug():
+    print "****" 
+    SOURCE_IP = "10.136.20.106"
+    SOURCE_PORT = 27070
+    conn_src = pymongo.Connection(host=SOURCE_IP,port=SOURCE_PORT)
+    #db_src_article = conn_src.WeiXinRecom.weixin_articles# sorurce DB
+    db_src_article = conn_src.WeiXinSubtopicPlatform.weixin_articles# sorurce DB
+
+    res_arts = db_src_article.find({'summary':{'$exists':True},'review':0}).limit(10)#pymongo is sensitive '',True not true
+    for art in res_arts:
+        print art.get('_id','100000').encode('gbk','ignore')
+        print "url*** = %s**" %art.get('url',"kongkong")
+        print art.get('review')
+        words = art.get('subtopic_1').decode('gbk')
+        print words
+        print art.get('summary',"kongkong")
+        '''
+        new_w = words.split()
+        for word in new_w:
+            print word
+            print "222"
+        for word in art.get('subtopic_1').decode('gbk'):
+            print word
+        '''
+        #print "***"
+        print art.get('topic1')
+        '''
+        for word in art.get('topic1').decode('gbk'):
+            print word
+        '''
+        #print (art.get('subtopic_1').decode('gbk'),art.get('topic1'))#.decode('gbk','ignore')
+    # close db    
+    conn_src.close()
+
+
+
+# just for test keywords in special lists, qian tao lists
+def main():
+    SOURCE_IP = "10.136.20.106"
+    SOURCE_PORT = 27070
+    conn_src = pymongo.Connection(host=SOURCE_IP,port=SOURCE_PORT)
+    db_src_article = conn_src.WeiXinRecom.weixin_articles
+    res_arts = db_src_article.find({'keywords':{'$exists':True}},{'keywords':1}).limit(30)#pymongo is sensitive '',True not true
+    
+    cp = 0
+    for art in res_arts:
+        cp = cp + 1
+        print "di:%d -- art:id = %s ;" %(cp,art.get('_id','10000').encode('gbk','ignore'))
+        keywords = art.get('keywords',[])
+        if not keywords:# empty
+            print "keywords is an empty list[]..."
+            continue
+        for word in keywords:#keywords is collection of lists
+            if not word:
+                print "kong"
+            for ele in word:
+                if type(ele)==list:
+                    for e in ele:
+                        print "e = %s" %e
+                else:#word,pos
+                    print "ele = %s" % ele#.encode('gbk','ignore')
+    # close
+    conn_src.close()
+    '''格式如下：
+    { "_id" : "42c4a9be657885b3df63e47d4d41308f", "keywords" : [ ] }
+    { "_id" : "689ef41d47a05c5159e06e04b4c0165e", "keywords" : [  [  "锟斤拷锟斤拷",  [  1,  "锟斤拷司锟斤拷锟斤拷" ] ],  [  "锟斤拷锟斤拷",  [  1,  "锟斤拷锟斤拷锟斤拷锟斤拷" ] ] ] }
+    { "_id" : "76edf0b9b3c246eec6c1ab4b0e54e234", "keywords" : [  [  "装锟斤拷",  5 ],  [  "锟斤拷锟斤拷",  5 ],  [  "装锟斤拷",  5 ] ] }
+
+    isinstance可以用来判断一个变量是否属于一个类。 在python里应该是正确的。
+     if type(x)==list:pass
+      if type(x)==dict:pass
+    '''
+
+def split_join():
+    str1 = '1,2,3'
+    str_list = str1.split(',',1)
+    print str_list
+
+    str_2 = '\t'.join(str_list)
+    print str_2
+
+def garry_tongji():
+    print "in garry"
+    SOURCE_IP = "10.144.85.109"
+    SOURCE_PORT = 17016
+    conn_src = pymongo.Connection(host=SOURCE_IP,port=SOURCE_PORT)
+    #db_src_article = conn_src.WeiXinRecom.weixin_articles# sorurce DB
+    db_src_article = conn_src.WeiXinRecom.weixin_articles # sorurce DB
+
+    res_arts = db_src_article.find().limit(10)#pymongo is sensitive '',True not true
+    for art in res_arts:
+        #print art.get('_iddd','100000').encode('gbk','ignore')
+        print "topic1 = %s" %art.get('topic1',"kongkong")
+        print "subtopic_1 = %s" % art.get('subtopic_1')
+        print "account_openid = %s" % art.get('account_openid')
+    conn_src.close()
+def garry_statistics():
+    #openid, account, topic1, sutopic_1, total_num, topic_num , subtopic_num  对每一个topic1, 按照 subtopic_num排序
+    print "in garry"
+    SOURCE_IP = "10.144.85.109"
+    SOURCE_PORT = 17016
+    conn_src = pymongo.Connection(host=SOURCE_IP,port=SOURCE_PORT)
+    #db_src_article = conn_src.WeiXinRecom.weixin_articles# sorurce DB
+    db_src_article = conn_src.WeiXinRecom.weixin_articles # sorurce DB
+    res_arts = db_src_article.find({},{"topic1":1,"subtopic_1":1,"account_openid":1,"account":1}).limit(10000)#pymongo is sensitive '',True not true
+    topic1_account_openid_subtopic_1_num = {}
+    account_openid_num = {}
+    '''
+    topic1_account_openid_num = {}
+    topic1_account_openid = {}
+    topic1_account_openid_subtopic_1 = {}
+    '''
+    cnt_topic1 = 0
+    cnt_subtopic_1 = 0
+    for art in res_arts:
+        topic1 = art.get('topic1',"kong top")
+        subtopic_1 = art.get('subtopic_1','kong sub')
+        account_openid = art.get('account_openid','kong acc_op')
+        account = art.get('account','kong acc')
+        if not topic1:
+            topic1 = "others"
+            cnt_topic1 += 1
+        if not subtopic_1:
+            subtopic_1 = "sub_others"
+            cnt_subtopic_1 += 1
+
+        if topic1 not in topic1_account_openid_subtopic_1_num:
+            topic1_account_openid_subtopic_1_num[topic1] = {}
+            if account_openid not in topic1_account_openid_subtopic_1_num[topic1]:
+                topic1_account_openid_subtopic_1_num[topic1][account_openid] = {}
+                if subtopic_1 not in topic1_account_openid_subtopic_1_num[topic1][account_openid]:
+                    topic1_account_openid_subtopic_1_num[topic1][account_openid][subtopic_1] = 1
+                else:
+                    topic1_account_openid_subtopic_1_num[topic1][account_openid][subtopic_1] += 1
+            else:
+                if subtopic_1 not in topic1_account_openid_subtopic_1_num[topic1][account_openid]:
+                    topic1_account_openid_subtopic_1_num[topic1][account_openid][subtopic_1] = 1
+                else:
+                    topic1_account_openid_subtopic_1_num[topic1][account_openid][subtopic_1] += 1
+               
+        else:
+            if account_openid not in topic1_account_openid_subtopic_1_num[topic1]:
+                topic1_account_openid_subtopic_1_num[topic1][account_openid] = {}
+                if subtopic_1 not in topic1_account_openid_subtopic_1_num[topic1][account_openid]:
+                    topic1_account_openid_subtopic_1_num[topic1][account_openid][subtopic_1] = 1
+                else:
+                    topic1_account_openid_subtopic_1_num[topic1][account_openid][subtopic_1] += 1
+            else:
+                if subtopic_1 not in topic1_account_openid_subtopic_1_num[topic1][account_openid]:
+                    topic1_account_openid_subtopic_1_num[topic1][account_openid][subtopic_1] = 1
+                else:
+                    topic1_account_openid_subtopic_1_num[topic1][account_openid][subtopic_1] += 1
+
+        
+
+        # statistic by account_openid
+        account_openid_num[account_openid] = account_openid_num.get(account_openid,0) + 1
+
+        '''
+        if topic1 not in topic1_account_op:
+            topic1_account_openid[topic1] = {}
+            if account_openid not in topic1_account_openid_subtopic_1:
+                topic1_account_openid_subtopic_1[account_openid] = {}
+                if subtopic_1 not in topic1_account_openid_subtopic_1_num:
+                    topic1_account_openid_subtopic_1_num[subtopic_1] = 0
+                else:
+                    topic1_account_openid_subtopic_1_num[subtopic_1] += 1
+            else:
+                if subtopic_1 not in topic1_account_openid_subtopic_1[account_openid]
+                    topic1_account_openid_subtopic_1_num[subtopic_1] = 0
+                else:
+                    topic1_account_openid_subtopic_1_num[subtopic_1] += 1
+               
+        else:
+            if account_openid not in topic1_account_openid[topic1]:
+                topic1_account_openid_subtopic_1[account_openid] = {}
+                if subtopic_1 not in topic1_account_openid_subtopic_1_num:
+                    topic1_account_openid_subtopic_1_num[subtopic_1] = 0
+                else:
+                    topic1_account_openid_subtopic_1_num[subtopic_1] += 1
+            else:
+                if subtopic_1 not in topic1_account_openid_subtopic_1[account_openid]
+                    topic1_account_openid_subtopic_1_num[subtopic_1] = 0
+                else:
+                    topic1_account_openid_subtopic_1_num[subtopic_1] += 1
+    '''
+    conn_src.close()
+
+    # sort by topic1 and subtopic_1
+    #sort_topic1_account_openid_subtopic_1_num = sorted(dict(dict(topic1_account_openid_subtopic_1_num.items()[1]).items()[1]).items(), key=lambda d:d[1], reverse=True)
+
+    # write to file
+    ##openid, account, topic1, sutopic_1, total_num, topic_num , subtopic_num  对每一个topic1, 按照 subtopic_num排序
+    #topic1_account_openid_subtopic_1_num[topic1][account_openid][subtopic_1] += 1
+    fw = open("statistics_0630newnew.data","w")
+    print >> fw, "account_openid\taccount\ttopic1\tsubtopic_1\ttotal_num\ttopic1_value\tsubtopic_1_value"
+    for topic1, topic1_value in topic1_account_openid_subtopic_1_num.items():
+        #print >> fw,"%s" % topic1
+        subtopic_1_value_temp = {}
+        for account_openid, account_openid_value in topic1_value.items():
+            for subtopic_1, subtopic_1_value in account_openid_value.items():
+                key = "\t%s\t%s\t%s\t%s\t%d\t%d" % \
+                    (account_openid,account,topic1,subtopic_1,account_openid_num[account_openid],\
+                    sum(account_openid_value.values()))
+                subtopic_1_value_temp[key] = subtopic_1_value
+        subtopic_1_value_sort = sorted(subtopic_1_value_temp.items(), key=lambda d:d[1], reverse=True)
+
+        for key, key_value in subtopic_1_value_sort:
+            print >> fw, ("%s\t%d") % (key, key_value)
+
+    
+
+if (__name__ == "__main__"):
+    #main()
+    #fetch_id_bug()
+    #fetch_summary_seg_bug()
+    garry_statistics()
+    #split_join()
