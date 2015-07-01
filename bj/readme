@@ -10,6 +10,21 @@ zyp@ubuntu:~/Desktop/python_zyp/bj_soso$ sudo mount -t vfat /dev/sdb1 ~/Desktop/
 copy wenjian:
 cp -rf ~/Desktop/python_zyp/bj_soso/mouwenjianjia/* ./mouwenjianjia/
 
+git operations:
+git add dir/file
+git commit -m
+git status
+git branch -a
+git checkout branch
+git commit -a
+git push origin HEAD
+
+# scp \cp
+scp -r username@IP:/dir  local_dir
+lsb_release -a
+
+
+
 I think, if you have more problems in your life, you will learn more and more quickly to adapt to the new environment and world..If you just live in school and learn what the teacher told and learn by yourself, you learn little and growing little....lilun yu shijian; shijian tai zhongyao le
 
 I can't use command: git commit -a ,beacause the defalut EDITOR is nano;You should first change nano to vim...  command: echo export EDITOR=/usr/bin/vim >> ~/.bashrc
