@@ -18,11 +18,54 @@ git branch -a
 git checkout branch
 git commit -a
 git push origin HEAD
+git commit -au # -a--all  -u--untracked-files
 
 # scp \cp
 scp -r username@IP:/dir  local_dir
+scp local_file remote-username@remote_ip:remote_folder
+scp -r remote-username@remote_ip:remote_folder local_folder
 lsb_release -a
 
+#svn
+svn co svn://192,168.1.1/pro/debian
+svn add file/folder
+svn commit -m "commit the new ond"
+svn log path
+
+#awk unix2dos dos2unix
+awk 'NR>1 {print $0}' read_file >> write_file
+awk 'BEGIN{FS="\t";OFS=","} {print $1,$3,$4}' file_read # default is stdout
+dos2unix file1 file2 file3... filen # operater on itself
+dos2unix -n oldfile newfile
+dos2unix -k file1 # remain the timestamp
+
+#grep ps 
+ls -l | grep "^_" | wx -l # count the numbers of files in this folder or grep "^d"
+ls -lr | grep "^_" | wx -l
+
+ps aux | grep 8889
+kill -9 pid
+killall process
+
+find ./ | grep py | xargs grep main
+find ./ | grep py | grep -v svn | xargs grep main
+grep   -i  -------ingnore-case   -v ----- invert-match
+
+
+# tail nohup
+nobup python manage.py runserver IP:port 1>data.log 2>&1 & #(redirect and run in bg)
+tail -f data.log # jian shi the results
+tail -n 13 data.log | head -n -3
+head -n 20 data.log | tail -n +11
+
+#which(exe) whereis(all) find
+which bash # /bin/bash
+which python #/usr/bin/python2.6
+whereis bash # all the bash file
+find ./ -name *.py # -user name    -mtime -n +n 
+
+
+# others please baidu and google
 
 
 I think, if you have more problems in your life, you will learn more and more quickly to adapt to the new environment and world..If you just live in school and learn what the teacher told and learn by yourself, you learn little and growing little....lilun yu shijian; shijian tai zhongyao le
