@@ -9,6 +9,7 @@ zyp@ubuntu:~/Desktop/python_zyp/bj_soso$ sudo mount -t vfat /dev/sdb1 ~/Desktop/
 
 copy wenjian:
 cp -rf ~/Desktop/python_zyp/bj_soso/mouwenjianjia/* ./mouwenjianjia/
+cp -r ~/Desktop/mount_UPan/***/ ~/home_zyp/leargit/bj/
 
 git operations:
 git add dir/file
