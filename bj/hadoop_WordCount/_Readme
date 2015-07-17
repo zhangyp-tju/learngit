@@ -1,0 +1,24 @@
+#!coding=utf-8
+-->cat join.* | python2.6 join_mapper.py | sort | python2.6 join_reducer.py  | python2.6 join_mapper2.py | sort -t $'\t' -k1,2 | python2.6 join_reducer2.py 
+keyvalue1 a1 a2 a3 an value2 b1 b2 b3 bn value3 c1 c2 c3 cn value4 d1 d2 d3 dn value5 e1 e2 e3 en value6 f1 f2 f3 fn value7 g1 g2 g3 gn value8 h1 h2 h3 hn
+
+-->今天在使用hadoop时遇到一个需求，要将具有一定关系的若干个大表进行合并join，乍看起来比较困难。但是仔细分析了一下，还是可以比较好的解决问题的。况且在海量数据处理中，这是一个非常普遍常见的需求。
+
+下面描述一下需求，有如下两种数据
+数据A
+key value1 value2 value3...valuen
+
+数据B
+value1 a1 a2 a3....an
+value2 b1 b2 b3....bn
+...
+valuen x1 x2 x3...xn
+
+目标数据
+key value1 a1 a2 a3...an value2 b1 b2 b3...bn....valuen x1 x2 x3...xn
+
+也就是要把所有的数据集合并在一行。当然，所有的数据都是海量的，上TB的数据，显然无法单机进行合并。于是本人想了个办法，在hadoop集群上使用两轮mapreduce完.
+
+两轮的MR，用到了Chaining MapReduce jobs in a sequence ，简单的顺序执行
+
+-->run_WC_hadoop.sh 这是自己的第一个hadoop streaming 程序（用的python作为mapper 和 reducer,当然也可以用c/c++ shell等）
