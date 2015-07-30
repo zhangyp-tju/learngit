@@ -65,6 +65,21 @@ which python #/usr/bin/python2.6
 whereis bash # all the bash file
 find ./ -name *.py # -user name    -mtime -n +n 
 
+#2015.0730
+the command in shell:time tr awk sed set -x and so on
+time ---- record the commands operating or run time:time ./*.sh
+tr ---- tr '[a-z]' '[A-Z]' < words.txt ; tr -s ' ' ' ' < words.txt
+        tr -s '\n' '\n' < words.txt | tr -s ' ' ' '
+awk ---- you can use if-else while for and break,continue,exit like c/c++ 
+        awk 'NR>1 {print $0}'; awk -F '\t' '{if(match($4,"zhong wen")){some code;} else {some code;}}'
+sed ---- sed -e  'cmd1' -e 'cmd2' filename
+		sed '/str/' d filename > file_new
+		sed '/^$/' d filename > file_new
+set ---- debug for shell 
+         set -x open  set +x close
+python: '-'.join(seq)  set & | -
+tr can instead of the filter_data.py
+
 
 # others please baidu and google
 
