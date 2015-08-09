@@ -1,0 +1,42 @@
+
+17 * * * * /usr/sbin/ntpdate ntp.sogou-op.org >> /var/log/ntpdate_log 2>&1
+17 14 * * * /sbin/clock -w
+
+#00,20,40 * * * * cd /search/huchaoou/Ietools/Index/DataCenter;  sh UpDateModel.sh 
+#00 * * * * cd /search/huchaoou/Instant/DocDispatch; sh getdata.sh 
+#0 0 * * * cd /search/huchaoou/Instant/DocDispatch; sh restart.sh
+#0 */1 * * * cd /search/denghailong; sh transfer.sh 1> stdlog 2>stderr
+
+##wangxiangming
+#0 1 * * * cd /search/darrenan/code/Weixin_report/backup/; sh MongoCleaning.sh 
+#25 */1 * * * cd /search/wangxiangming/test_sh/requst_report_pipeline/user/; sh send_cold_start.sh
+#0 6 * * * cd /search/wangxiangming/test_sh/requst_report_pipeline/user/; sh send_wx_main_metric.sh
+#0 5 * * * cd /search/darrenan/code/Weixin_report/script/; sh backup_output.sh
+
+##darrenan
+##0 1 * * * cd /search/darrenan/code/Weixin_report/script;sh run_online.sh
+#0 2 * * * cd /search/darrenan/code/Weixin_report/script;sh run_online1.sh
+##15 */1 * * * cd /search/darrenan/code/Weixin_report/script;sh run_hour_online.sh
+#5 */1 * * * cd /search/darrenan/code/Weixin_report/script;sh run_hour_online1.sh
+
+##weixin headlines by darrenan
+#10 */2 * * * cd /search/darrenan/code/Weixin_event_final/script;sh run.sh >> run.log 2>&1
+#30 2 * * * cd /search/darrenan/code/Weixin_event_final/weixin_cluster; sh run_wx_del.sh >> run_wx_del.log 2>&1
+
+##weixin cluster demo
+#5 */1 * * * cd /search/darrenan/code/Weixin_event_final/wx_hot_cluster/script;sh run.sh >> run.log 2>&1
+#30 */1 * * * cd /search/darrenan/code/Weixin_event_final/wx_hot_cluster/script_news;sh run_news.sh >> run_news.log 2>&1
+
+#zhuguangnan
+#15 3 * * * cd /search/zhuguangnan/hadoop/wx_push_xml; sh run.sh>>log 2>&1
+#15 */1 * * * cd /search/zhuguangnan/wx_push/script; sh hourly_run.sh>>log 2>&1
+35 */1 * * * cd /search/zhuguangnan/push_resource/trunk/script; sh hourly_run.sh>>log 2>&1
+
+#darrenan weixin hotword
+5 * * * * cd  /search/darrenan/code/weixin_svn_newsToQuery/bin_python; sh run.sh >>../logs/hotword_sh.log 2>&1
+
+#yapeng subtopic_data_5
+#*/30 * * * * cd /search/yapeng/subtopic_data; sh test.sh >> ./logs/subtopic_data_5.log 2>&1
+#15 23 */3 * * cd /search/yapeng/subtopic_data; sh statistic.sh >> ./logs/subtopic_data_5.log 2>&1
+#15 23 * * 0,2,4 cd /search/yapeng/subtopic_data; sh statistic.sh >> ./logs/subtopic_data_5.log 2>&1
+#06 17 * * * cd /search/yapeng/subtopic_data; sh statistic.sh >> ./logs/subtopic_data_5.log 2>&1
