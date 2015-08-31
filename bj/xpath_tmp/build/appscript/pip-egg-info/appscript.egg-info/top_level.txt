@@ -1,0 +1,4 @@
+mactypes
+aem
+appscript
+osax

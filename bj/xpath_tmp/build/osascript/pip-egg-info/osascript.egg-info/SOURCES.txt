@@ -1,0 +1,6 @@
+osascript/__init__.py
+pip-egg-info/osascript.egg-info/PKG-INFO
+pip-egg-info/osascript.egg-info/SOURCES.txt
+pip-egg-info/osascript.egg-info/dependency_links.txt
+pip-egg-info/osascript.egg-info/requires.txt
+pip-egg-info/osascript.egg-info/top_level.txt

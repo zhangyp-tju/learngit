@@ -1,0 +1,39 @@
+Metadata-Version: 1.1
+Name: osascript
+Version: 0.0.4
+Summary: Python osascript (Mac OS AppleScript) wrapper. Also, provides sudo GUI ;)
+Home-page: http://github.com/cancerhermit/PyOSAscript/
+Author: cancerhermit
+Author-email: cancerhermit@gmail.com
+License: GPL
+Description: Installing
+        ----------
+        
+        ::
+        
+            pip install osascript
+        
+        Usage
+        -----
+        
+        ::
+        
+            from osascript import osascript, sudo
+            osascript('tell application "iTunes" to play')
+            print osascript('return {1,2,3}',"h") # osascript flags
+            >>> 1, 2, 3
+            sudo("python setup.py install") # GUI if no terminal
+        
+        `osascript(1) OS X Manual
+        Page <http://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man1/osascript.1.html>`_
+        
+Keywords: Mac OS osascript
+Platform: MacOS X
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: Environment :: Console
+Classifier: Environment :: MacOS X
+Classifier: Natural Language :: English
+Classifier: Operating System :: MacOS
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Utilities
