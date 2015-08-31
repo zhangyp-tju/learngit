@@ -1,0 +1,31 @@
+#当下工程目录的说明
+
+#功能一 ---- 发文频率和篇数，细化成以下区间较为合理：
+    statistic_fawen_byopenid.py ~ *2.py
+    statistic_fawen_byopenid.sh ~ *2.sh
+    启动：statistic_fawen_byopenid_all.sh即可（仅仅需要在statistic_fawen_byopenid.sh中按照需要统计的月份进行修改）
+    提示：当程序运行稳定后，特别是statistic_fawen_byopenid1.py                            
+    中间结果不在需要时，可以把三者合并为一个功能文件，仅仅保存statistic_fawen_byopenid2.py的最后结果
+
+
+#功能二 ----- 粉丝数
+    read_num_yuedu_fensi_bi_none.* 文件 (.py .sh .csv) 分别为源程序文件，执行文件，存放结果文件
+    提示：由于是线上的大库，首先download在本地文件（input_tmp/*.json文件）；但是由于json文件过大，需要手动分割文件 cmd:
+    awk 'BEGIN{print "["} NR<10521425 {print $0} END{print "]"}' read_num_yuedu_fensi_bi.json > read_num_yuedu_fensi_bi.json_1
+    awk 'BEGIN{print "["} NR>=10521425 && NR<20521425 {print $0} END{print "]"}' read_num_yuedu_fensi_bi.json > read_num_yuedu_fensi_bi.json_2
+    awk 'BEGIN{print "["} NR>=20521425 && NR<30521425 {print $0} END{print "]"}' read_num_yuedu_fensi_bi.json > read_num_yuedu_fensi_bi.json_3
+
+
+
+
+# 功能三 ----- 被转载率/被转载文章数/被转载次数 data from mongodb
+    get_reprint_rate_arts.* 文件 (.py .sh .csv) 分别为源程序文件，执行文件，存放结果文件
+
+
+#功能五 ----- 原创
+    getOriAccount.*  文件 (.py .sh .csv) 分别为源程序文件，执行文件，存放结果文件
+
+# 功能四 ----- 账号平均阅读数
+    updateAverageReadnum.* 文件 (.py .sh .csv) 分别为源程序文件，执行文件，存放结果文件
+
+# 认证信息 
