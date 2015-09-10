@@ -6,7 +6,7 @@ import sys
 import json
 import urllib
 import urllib2
-url = "http://10.134.37.33:9999"
+url = "http://192.168.175.128:8899" # this ip is from ifconfig cmd and the host can reach this url...
 data = {}
 data["mids"] = []
 
