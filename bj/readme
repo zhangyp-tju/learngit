@@ -80,6 +80,9 @@ set ---- debug for shell
 python: '-'.join(seq)  set & | -
 tr can instead of the filter_data.py
 
+# Ubuntu 12.04 LTS 中文输入法的安装 ---- just BaiDu thi title
+
+# vi vim 中文乱码 ---- just change the ~/.vimrc or cp ./vimrc* ~/.vimrc
 
 # others please baidu and google
 
