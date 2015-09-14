@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-# coding=utf-8
+#coding=utf-8
+#!coding=utf-8
 
 import sys
 import time
@@ -86,7 +87,7 @@ def load_openid(openid_file):
 
 # generate one ulrs_list change by zyp
 def getUrls(openid_file,tmpfile):
-    load_openid(openid_file)
+    #load_openid(openid_file)
     url_list = []
     cnt = 0
     for line in open(tmpfile):
@@ -100,15 +101,18 @@ def getUrls(openid_file,tmpfile):
             continue
         try:
             openid = cols[-3].split("##",1)[1]
+            #print openid
         except:
             print >> sys.stderr, "ERROR...%s" % (line)
-        if openid not in openid_set:
-            continue
+        #if openid not in openid_set:
+        #    continue
         url_list.append(line)
+    print >> sys.stderr,"test...ÖĞÎÄÂÒÂë£¿"
     return url_list
 
-#http://mp.weixin.qq.com/s?__biz=MzA3ODc5MDEwNA==&mid=211215188&idx=1&sn=8f11f5930c0ae90eb265c7e25624c699&3rd=MzA3MDU4NTYzMw==&scene=6#rd  æ•™ä½ åŒ–å¦†ä¸ç˜¦èº«  oIWsFt4Qq2xa3B8Z65MuHFLPLFPA
-#ã€€python2.6  getOriAccount.py url_name_openid_0824
+# python  getOriAccount.py url_name_openid_0824 ²âÊÔÖĞÎÄ
+# python getOriAccount.py 111 getOriAccount.data > tmp.result
+### ²»ÖªµÀÎªÊ²Ã´£¬¿ØÖÆÌ¨Êä³öÂÒÂë£¬ÖØ¶¨ÏòÊä³öµ½ÎÄ¼şÖĞ£¬Õı³£
 if __name__ == '__main__':
     begin_time = datetime.now()
     logging.basicConfig(level=logging.DEBUG,format='%(process)d %(asctime)s  %(levelname)s %(message)s',datefmt='%a, %d %b %Y',filename= LOG_FILE,filemode='w')

@@ -1,3 +1,4 @@
+#coding=gbk
 #################################################
 # kmeans: k-means cluster
 # Author : zouxy
@@ -18,6 +19,7 @@ def euclDistance(vector1, vector2):
 # init centroids with random samples
 def initCentroids(dataSet, k):
     numSamples, dim = dataSet.shape
+    print "initCentroids:",numSamples,dim
     centroids = zeros((k, dim))
     for i in range(k):
         index = int(random.uniform(0, numSamples))
@@ -29,7 +31,7 @@ def kmeans(dataSet, k):
     numSamples = dataSet.shape[0]
     # first column stores which cluster this sample belongs to,
     # second column stores the error between this sample and its centroid
-    clusterAssment = mat(zeros((numSamples, 2))) # matrix and init it
+    clusterAssment = mat(zeros((numSamples, 2))) # matrix and init it # ¼ÇÂ¼index ºÍ ¾àÀë²î
     clusterChanged = True
 
     ## step 1: init centroids
